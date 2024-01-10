@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body, html { 
+    background-color: #1F1F1F;
+}
+
+.navbarButton { 
+    width: 0;
+    transition: all 250ms ease-out;
+}
+
+.navbarButton.hover { 
+    width: 100%;
+}
+
+.blurBackground { 
+
+    animation: blurBackgroundAnimation;
+    animation-delay: 200ms;
+    animation-duration: 500ms;
+    animation-timing-function: ease-out;
+    animation-fill-mode: both;
+}
+
+@keyframes blurBackgroundAnimation { 
+    from {
+        filter: brightness(100%) blur(0px) grayscale(0%);
+    }
+    to {filter:  brightness(50%) blur(5px) grayscale(12%)}
+}

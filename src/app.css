@@ -24,6 +24,16 @@ body, html {
     animation-fill-mode: both;
 }
 
+
+.baseImage { 
+    scale: 100%;
+    transition: all 200ms ease-out;
+}
+
+.baseImage.hover { 
+    scale: 102%;
+}
+
 @keyframes blurBackgroundAnimation { 
     from {
         filter: brightness(100%) blur(0px) grayscale(0%);

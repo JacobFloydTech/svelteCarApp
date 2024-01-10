@@ -19,6 +19,7 @@
         })
 
         const { results } = await response.json();
+    
         query.set(results)
         
     }

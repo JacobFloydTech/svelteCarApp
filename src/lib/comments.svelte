@@ -1,16 +1,18 @@
 <script lang="ts">
+	import { onMount } from "svelte";
 	import type { Comment } from "../../types";
-	import { getHemmingsCookie } from "./firebaseConfig";
-
+	
     export let linkComponent: string;
     let comments: Comment[] = [];
 
     async function getComments(linkComponent: string) { 
         const link = `https://www.hemmings.com/auctions/api/${linkComponent}/comment`
-        const response = await fetch('http://localhost:3000/getComments', { method: "POST", body: JSON.stringify({link})});
+        const response = await fetch('http://localhost:3000/getComments', { method: "POST", body: JSON.stringify({link}), headers: { 
+            'Content-Type': ' application/json'
+        }});
         comments = await response.json()
     }
-    getComments(linkComponent);
+    onMount(() =>  getComments(linkComponent));
     
 </script>
 

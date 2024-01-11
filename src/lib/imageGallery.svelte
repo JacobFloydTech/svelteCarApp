@@ -27,9 +27,11 @@
 
     const scrollToImage = () => { 
         const el = document.getElementById(currentImageIndex + '');
+  
         console.log(el);
         if (!el) { return}
-        el.scrollIntoView({behavior: "smooth"})
+        console.log(el.offsetLeft);
+        imageGallery?.scrollTo({top: 0, left: el.offsetLeft, behavior: 'smooth'});
     }
     const getTitle = (title: string) => { return title.slice(0,1)+title.slice(1).toLowerCase() }
     async function fetchImages() { 
@@ -45,7 +47,7 @@
         if (data) currentGallery = data[0]
 
     }
-    fetchImages()
+    onMount(() => fetchImages())
 
 </script>
 
@@ -54,12 +56,12 @@
     <div class="text-white flex space-x-8 items-center w-full justify-center ">
     {#if data}
         {#each data as gallery, index }
-            <button class={'transition-all duration-150 py-4 ' + (currentGallery?.title == gallery.title ? " scale-105 -translate-y-1" : "scale-100 -translate-y-0")} on:click={() => { if (data) { currentGallery = data[index]; currentImageIndex = 0} }}>{getTitle(gallery.title)}</button>            
+            <button class={'transition-all duration-150 py-4 ' + (currentGallery?.title == gallery.title ? " scale-105 -translate-y-1" : "scale-100 -translate-y-0") + (data.length > 4 ? " text-base" : " text-xl")} on:click={() => { if (data) { currentGallery = data[index]; currentImageIndex = 0} }}>{getTitle(gallery.title)}</button>            
         {/each}
     {/if}
     </div>
     {#if currentGallery}
-    <div class="relative">
+    <div  class="relative">
         <div bind:this={imageGallery} class="flex overflow-x-scroll imageGallery">
                 {#each currentGallery.images as image, i }
                     <img id={i+ ''} alt={`currentGallery${i}`} src={image.src}/>

@@ -9,9 +9,9 @@
 </script>
 
 <div class="px-4">
-    <div class="grid grid-cols-2 gap-4 ">
+    <div class="grid md:grid-cols-2 gap-4 ">
         <ImageGallery {linkComponent}/>
         <CarContent {data}/>
     </div>
-    <Comments {linkComponent}/>
+ 
 </div>

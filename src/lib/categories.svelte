@@ -2,11 +2,9 @@
     import { query } from "../store";
 	import ShowLess from "./svg/showLess.svelte";
     import ShowMore from "./svg/showMore.svelte";
+    import type { Button } from "../../types";
     let extend: boolean = false;
-    type Button = { 
-        title: string,
-        slug: string,
-    }
+
     const buttons: Button[] = [
         { title: 'Exotics', slug: 'Exotics' },
         { title: 'Classics', slug: 'Classics' },
@@ -57,14 +55,9 @@
         {/if}</button>
     </div>
     <div class="grid text-white grid-cols-3 gap-x-6 gap-y-4">
-        {#if extend}
-            {#each buttons as button }
-                <button class="border-white border-2 rounded-full transition duration-150 hover:scale-105  py-2" on:click={() => getRecommendedQuery(button.slug)}>{button.title}</button>
+            {#each buttons.slice(0,(extend ? buttons.length : 9)) as button }
+                <button class="border-white border-2 text-lg font-bold rounded-full transition duration-100 hover:scale-105  py-2" on:click={() => getRecommendedQuery(button.slug)}>{button.title}</button>
             {/each}
-        {:else}
-            {#each buttons.slice(0,9) as button }
-                <button class="border-white border-2 rounded-full transition duration-150 hover:scale-105  py-2" on:click={() => getRecommendedQuery(button.slug)}>{button.title}</button>
-            {/each}
-        {/if}
+   
     </div>
 </div>

@@ -2,8 +2,7 @@
 	import { onMount } from "svelte";
     import type { Gallery } from "../../types";
 	import { getHemmingsCookie } from "./firebaseConfig";
-    import arrowLeft from '$lib/svg/arrowLeft.svelte'
-    import arrowRight from '$lib/svg/arrowRight.svelte'
+
 	import ArrowLeft from "$lib/svg/arrowLeft.svelte";
 	import ArrowRight from "$lib/svg/arrowRight.svelte";
     export let linkComponent: string;
@@ -27,10 +26,7 @@
 
     const scrollToImage = () => { 
         const el = document.getElementById(currentImageIndex + '');
-  
-        console.log(el);
         if (!el) { return}
-        console.log(el.offsetLeft);
         imageGallery?.scrollTo({top: 0, left: el.offsetLeft, behavior: 'smooth'});
     }
     const getTitle = (title: string) => { return title.slice(0,1)+title.slice(1).toLowerCase() }

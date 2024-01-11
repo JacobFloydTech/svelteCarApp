@@ -12,11 +12,26 @@ app.use(cors())
 
 app.use(express.json())
 
+app.post('/', async(req, res) => {
+    const {linkComponent} = req.body;
+    const cookie = await getHemmingsCookie();
+    const link = `https://www.hemmings.com/auctions/api/${linkComponent}/gallery-images`
+    const response = await fetch(link, { headers: { cookie: cookie}})
+    const data = await response.json();
+
+    res.send(data)
+})
+
+
 app.post('/getCategory', async(req, res) => { 
     const cookie = await getHemmingsCookie();
     if (!cookie) { return }
-    const { slug } = req.body;
-    const link = `https://www.hemmings.com/stories-api/search/listings?adtype=cars-for-sale&page=1&sort_by=recommended&category[]=${slug}`
+    const { ids } = req.body;
+    let link = `https://www.hemmings.com/stories-api/search/listings?adtype=cars-for-sale&page=1&sort_by=recommended`
+    ids.forEach((e) => { 
+        link += `&make_id[]=${e}`
+    })
+    console.log(link);
     const response = await fetch(link, { headers: { "cookie": cookie } });
     const { results } = await response.json();
 
@@ -33,15 +48,6 @@ app.get('/getRecommended', async (req, res) => {
     res.send({ results })
 })
 
-app.post('/', async(req, res) => {
-    const {linkComponent} = req.body;
-    const cookie = await getHemmingsCookie();
-    const link = `https://www.hemmings.com/auctions/api/${linkComponent}/gallery-images`
-    const response = await fetch(link, { headers: { cookie: cookie}})
-    const data = await response.json();
-
-    res.send(data)
-})
 
 app.post('/getComments', async(req, res) => { 
     const {link} = req.body;

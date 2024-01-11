@@ -1,7 +1,8 @@
 <script lang="ts">
   import NavbarButton from "$lib/navbarButton.svelte";
+	import type { Button } from "../../types";
   import "../app.css";
-  let buttons: string[] = ["Search", "Trending", "About Us"];
+  let buttons: Button[] = [{title:"Search", slug: "/"}, {title: "Trending", slug: "/trending"}, {title:"About Us", slug:"/about"}];
 </script>
 
 

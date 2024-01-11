@@ -13,5 +13,6 @@
         <ImageGallery {linkComponent}/>
         <CarContent {data}/>
     </div>
+    <Comments {linkComponent}/>
  
 </div>

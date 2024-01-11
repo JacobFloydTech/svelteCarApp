@@ -39,7 +39,7 @@ async function searchAPIbyID(id: number, year: string, page: number, cookie: str
 
 async function search(link: string,  cookie: string) { 
     const response = await fetch(link, { headers: { cookie: cookie}})
-    const { results} = await response.json();
+    const {results} = await response.json();
     return results;
 }
 

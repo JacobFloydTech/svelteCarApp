@@ -152,3 +152,17 @@ export interface Commentator {
   dealer: any
   auction_showroom: any
 }
+
+
+export type Button = { 
+  title: string,
+  slug: string,
+}
+
+export type Filter = { 
+  min_year: number | null;
+  max_year: number | null;
+  make_id: number | null;
+  min_price: number | null;
+  max_price: number | null;
+}

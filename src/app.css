@@ -40,3 +40,20 @@ body, html {
     }
     to {filter:  brightness(50%) blur(5px) grayscale(12%)}
 }
+
+
+.imageGallery::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.imageGallery {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  transition: all 100ms ease-out;
+  scale: 100%;
+}
+
+.scaleDownImageGallery { 
+    scale: 95%;
+}

@@ -22,7 +22,6 @@ async function searchAPIbyID(id: number, year: string, page: number, cookie: str
 
     while (carData == null && page <= 1000) { 
         const link = getLink(id, year, page);
-        console.log(link);
         let results = await search(link, cookie);
         if (!results || results.length == 0) { page = 10000}
         results = results.filter((x: Car) => x.id == id);

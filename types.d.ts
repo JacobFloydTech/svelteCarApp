@@ -160,9 +160,9 @@ export type Button = {
 }
 
 export type Filter = { 
-  min_year: number | null;
-  max_year: number | null;
-  make_id: number | null;
-  min_price: number | null;
-  max_price: number | null;
+  min_year?: string | null;
+  max_year?: string | null;
+  make_id?: string[];
+  min_price?: string | null;
+  max_price?: string | null;
 }

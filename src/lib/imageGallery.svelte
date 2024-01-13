@@ -65,8 +65,8 @@
      
         </div>
         <div class="text-white text-3xl h-full w-full top-0 left-0 absolute">
-            <button class={'absolute top-1/2 -translate-y-1/2 left-6 border-4 rounded-full border-black backdrop-blur-sm bg-gray-200 bg-opacity-10 ' + (currentImageIndex == 0 ? 'hidden' : '')} on:click={() => {currentImageIndex--; scrollToImage()}} > <ArrowLeft/> </button>
-            <button class={'absolute top-1/2 -translate-y-1/2 right-6 border-4 rounded-full border-black backdrop-blur-sm bg-gray-200 bg-opacity-10 ' + (currentImageIndex == currentGallery.images.length-1 ? 'hidden' : '')} on:click={() => { {currentImageIndex++; scrollToImage()}}}><ArrowRight/></button>
+            <button class={'absolute top-1/2 -translate-y-1/2 left-6 border-4 rounded-full border-black backdrop-blur-sm bg-gray-200 bg-opacity-10 ' + (currentImageIndex == 0 ? 'hidden' : '')} on:click={() => {currentImageIndex--; scrollToImage()}} > <ArrowLeft color='black'/> </button>
+            <button class={'absolute top-1/2 -translate-y-1/2 right-6 border-4 rounded-full border-black backdrop-blur-sm bg-gray-200 bg-opacity-10 ' + (currentImageIndex == currentGallery.images.length-1 ? 'hidden' : '')} on:click={() => { {currentImageIndex++; scrollToImage()}}}><ArrowRight color='black'/></button>
         </div>
     </div>
     {/if}

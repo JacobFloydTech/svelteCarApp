@@ -23,28 +23,33 @@ app.post('/', async(req, res) => {
 })
 
 
-app.post('/getCategory', async(req, res) => { 
+app.post('/filterSearch', async(req, res) => { 
     const cookie = await getHemmingsCookie();
     if (!cookie) { return }
-    const { ids } = req.body;
+    let { filter } = req.body;
     let link = `https://www.hemmings.com/stories-api/search/listings?adtype=cars-for-sale&page=1&sort_by=recommended`
-    ids.forEach((e) => { 
-        link += `&make_id[]=${e}`
-    })
-    console.log(link);
-    const response = await fetch(link, { headers: { "cookie": cookie } });
-    const { results } = await response.json();
+     filter = Object.entries(filter);
+    let make_ids = filter.pop()[1];
+    filter.filter((e) => e[1] !== null)
+        .map(e => `&${e[0]}=${e[1]}`)
+        .forEach((e) => link+=e);
+    if ( make_ids.length != 0) { 
+        link += make_ids.map((e) => `&make_id[]=${e}`).join('');
+    }
 
+    const response = await fetch(link, { headers: { "cookie": cookie}})
+    const {results} = await response.json()
     res.send({ results })
 })
 
-app.get('/getRecommended', async (req, res) => { 
+app.post('/getRecommended', async (req, res) => { 
+        const { page} = req.body;
         const cookie = await getHemmingsCookie();
         if (!cookie) { return}
-        const link =  `https://www.hemmings.com/stories-api/search/listings?adtype=cars-for-sale&page=1&sort_by=recommended`
+        const link =  `https://www.hemmings.com/stories-api/search/listings?adtype=cars-for-sale&page=${page}&sort_by=recommended`
         const response = await fetch(link, { headers: { cookie: cookie}});
         const { results } = await response.json();
-        console.log(results)    
+ 
     res.send({ results })
 })
 
@@ -75,6 +80,6 @@ app.post('/getDescription', async(req, res) => {
 })
 
 app.listen(port, async() => {
-    console.log("ready on" + port);
+    console.log(`Server live on ${port}`)
 })
 

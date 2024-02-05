@@ -1,12 +1,13 @@
 <script lang='ts'>
 	import { onMount } from "svelte";
 	import type { Car } from "../../types";
+	import { ip } from "../store";
     export let data: Car;
 
     let description: String = ''
     async function getDescription(url: string, id: number) { 
  
-        const response = await fetch('http://localhost:3000/getDescription', { 
+        const response = await fetch(`${$ip}/getDescription`, { 
             method: "POST",
             body: JSON.stringify({url, id}),
             headers: { 
@@ -23,7 +24,7 @@
 <div class="flex flex-col text-white text-xl space-y-2">
     <img alt="Car Thumbnail" class="h-96 object-cover hidden md:block" src={data.thumbnail.xl["16:9"]}/>
 
-    <div class="flex flex-col space-y-2 px-12">
+    <div class="flex flex-col space-y-2 px-4 md:px-12">
         <h1>{data.long_title}</h1>
         <div class="grid grid-cols-2 my-4">
             <div class="flex flex-col justify-between">
@@ -39,8 +40,10 @@
                 <p>Listing Date - {(new Date(data.start_date)).toDateString()}</p>
             </div>
         </div>
-        
-            {@html description}
+            <div class="text-base md:text-xl xl:text-2xl">            
+                {@html description}
+            </div>
+
 
     </div>
 </div>

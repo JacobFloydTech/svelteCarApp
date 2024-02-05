@@ -1,28 +1,39 @@
 <script lang='ts'>
-    import CarComponent from '$lib/carComponent.svelte';
+
 	import { onMount } from 'svelte';
     import type {Car} from '../../../types';
 	import ArrowLeft from '$lib/svg/arrowLeft.svelte';
 	import ArrowRight from '$lib/svg/arrowRight.svelte';
-
-
-    let data: Car[] = [];
+    import Results from '$lib/results.svelte';
+    import {blurCars, query, ip} from '../../store';
+	import LoadingComponent from '$lib/loadingComponent.svelte';
+    
+    
     let page = 1;
 
     async function getRecommended() { 
-        const response = await fetch('http://localhost:3000/getRecommended', { 
+
+        const response = await fetch(`${ip}getRecommended`, { 
             method: "POST",
             headers: { 
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({page})
         });
-        const {results} = await response.json();
-        data = results;
+        let {results} = await response.json();
+        results = results.filter((x: Car) => x.thumbnail !== null);
+        query.set(results)
+        blurCars.set(false)
 
     }
-    onMount(() => getRecommended());
+    onMount(() =>{ 
+        const item = sessionStorage.getItem('page')
+        !item ? sessionStorage.setItem('page', '1') :  page = parseFloat(item);
+        getRecommended()
+    });
 </script>
+
+
 
 <div>
     <div class="w-full h-[300px] 2xl:h-[400px] overflow-hidden relative">
@@ -33,19 +44,20 @@
         </div>
 
     </div>
-    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4 p-4 pt-12">
-    {#each data as car}
-        <CarComponent {car}/>
-    {/each}
+    {#if $query}
+        <Results/>
+        <div class="flex w-full items-center justify-center pb-4">
+            <button class={page == 1 ? "invisible " :  'block'} on:click={() => {page--;getRecommended(); blurCars.set(true) }}>
+                <ArrowLeft color="white"/>
+            </button>
+            <p class="text-4xl font-bold text-white">{page}</p>
+            <button on:click={() => {page++;getRecommended(); blurCars.set(true) }}>
+                <ArrowRight color="white"/>
+            </button>
+        </div>        
+    {:else}
+        <LoadingComponent/>
+    {/if}
 
-    </div>
-    <div class="flex w-full items-center justify-center">
-        <button class={page == 1 ? "invisible " :  'block'} on:click={() => {page--;getRecommended()}}>
-            <ArrowLeft color="white"/>
-        </button>
-        <p class="text-4xl font-bold text-white">{page}</p>
-        <button on:click={() => {page++;getRecommended()}}>
-            <ArrowRight color="white"/>
-        </button>
-    </div>
+
 </div>

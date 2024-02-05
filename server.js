@@ -6,11 +6,25 @@ import cors from 'cors'
 import { checkDescription, getHemmingsCookie } from './firebaseConfig.js'
 import puppeteer from 'puppeteer'
 
+
 const app = express();
 
 app.use(cors())
 
 app.use(express.json())
+
+app.post('/search', async(req, res) => { 
+    const cookie = await getHemmingsCookie()
+    if (!cookie) return
+    let {baseLink, ...body} = req.body;
+    baseLink += Object.values(body).join('');
+    const response = await fetch(baseLink, {headers: { 
+        "cookie": cookie
+    }})
+    const {results} = await response.json();
+    res.send(results)
+
+})
 
 app.post('/', async(req, res) => {
     const {linkComponent} = req.body;
@@ -48,7 +62,8 @@ app.post('/getRecommended', async (req, res) => {
         if (!cookie) { return}
         const link =  `https://www.hemmings.com/stories-api/search/listings?adtype=cars-for-sale&page=${page}&sort_by=recommended`
         const response = await fetch(link, { headers: { cookie: cookie}});
-        const { results } = await response.json();
+        let { results } = await response.json();
+        
  
     res.send({ results })
 })

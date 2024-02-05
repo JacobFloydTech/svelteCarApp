@@ -1,33 +1,26 @@
 <script lang="ts">
-    import { search, query } from "../store";
-    import { getHemmingsCookie, getLink } from '$lib/firebaseConfig';
+    import { data, query, ip } from '../store';
     import Filters from "./filters.svelte";
 	import Categories from "$lib/categories.svelte";
-    //@ts-ignore
-    function changeState(e) { 
+    function changeState(e:Event) { 
         e.preventDefault();
         if (!e.target) { return}
-        search.set(e.target.value);
+        const target = e.target as HTMLInputElement;
+        data.update((state) => ({...state, query: `&q=${target.value}`}))   
     }
 
     async function searchDatabase() { 
-        const cookie = await getHemmingsCookie();
-        if (!cookie) { return }
-        let input = $search
-        const response = await fetch(getLink(input.replace(" ", "+")), { 
-            headers: { 
-                "cookie": cookie
-            }
-        })
-
-        const { results } = await response.json();
-    
-        query.set(results)
+        query.set("loading")
+        const response = await fetch(`${$ip}/search`, { method: "POST", headers: { 
+            "Content-Type": "application/json",
+        }, body: JSON.stringify($data)})
+        const results = await response.json();
         
+        query.set(results)
     }
 </script>
 
-<div class="flex w-1/2 flex-col mx-auto space-y-8">
+<div class="flex md:w-3/4 xl:w-1/2 w-full flex-col mx-auto space-y-8">
     <Categories/>
     <Filters/>
     <div class="w-full rounded-full mx-auto bg-white flex h-12 overflow-hidden">

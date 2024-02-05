@@ -166,3 +166,14 @@ export type Filter = {
   min_price?: string | null;
   max_price?: string | null;
 }
+
+export type Link = { 
+  baseLink: string,
+  query: string,
+  companies: string,
+  max_year: string,
+  min_price: string,
+  max_price: string,
+  min_year: string,
+  category: string,
+}

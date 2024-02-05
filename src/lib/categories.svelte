@@ -1,8 +1,9 @@
 <script lang="ts">
-    import { query } from "../store";
+    import { data, ip, query } from "../store";
 	import ShowLess from "./svg/showLess.svelte";
     import ShowMore from "./svg/showMore.svelte";
-    import type { Button } from "../../types";
+    import type { Button, Link } from "../../types";
+    
     let extend: boolean = false;
 
     const buttons: Button[] = [
@@ -32,11 +33,16 @@
         { title: 'SUVs', slug: 'SUVs' }
     ]
 
-    async function getRecommendedQuery(slug: string) { 
-        const response = await fetch('http://localhost:3000/getCategory', {method: "POST", headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({slug :slug})})
-        const {results} = await response.json();
-        query.set(results);
+    async function setCategory(slug: string) { 
+        slug = `&category[]=${slug}`;
+        data.update((state) => ({...state, category: slug}))
+        const res = await fetch(`${$ip}/search`, { headers: { 
+            'Content-Type': "application/json"
+        }, method: "POST", body: JSON.stringify($data)})
+        const results = await res.json();
+        query.set(results)
     }
+
 </script>
 
 <div>
@@ -54,9 +60,9 @@
         </div>
         {/if}</button>
     </div>
-    <div class="grid text-white grid-cols-3 gap-x-6 gap-y-4">
+    <div class="grid text-white grid-cols-3 gap-x-4 md:gap-x-6 gap-y-4">
             {#each buttons.slice(0,(extend ? buttons.length : 9)) as button }
-                <button class="border-white border-2 text-lg font-bold rounded-full transition duration-100 hover:scale-105  py-2" on:click={() => getRecommendedQuery(button.slug)}>{button.title}</button>
+                <button class="border-white border-2 text-xs sm:text-sm md:text-lg font-bold rounded-full transition duration-100 hover:scale-105  py-2" on:click={() => setCategory(button.slug)}>{button.title}</button>
             {/each}
    
     </div>

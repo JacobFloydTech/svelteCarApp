@@ -87,7 +87,7 @@ app.post('/getDescription', async(req, res) => {
         const page = await browser.newPage();
         await page.goto(url);
         const data = await page.evaluate(() => { 
-            return document.querySelector('#auction-content  p ').innerHTML
+            return document.querySelector('#auction-content  p ')?.innerHTML
         })
    
         res.send({data})
@@ -97,4 +97,5 @@ app.post('/getDescription', async(req, res) => {
 app.listen(port, async() => {
     console.log(`Server live on ${port}`)
 })
+
 

@@ -20,10 +20,10 @@
     }
 </script>
 
-<div class="flex md:w-3/4 xl:w-1/2 w-full flex-col mx-auto space-y-8">
+<div class="flex md:w-3/4 xl:w-1/2 w-[90%]  mx-auto flex-col  space-y-8">
     <Categories/>
     <Filters/>
-    <div class="w-full rounded-full mx-auto bg-white flex h-12 overflow-hidden">
+    <div class="w-full pr-2 md:pr-0 rounded-full mx-auto bg-white flex h-12 overflow-hidden ">
 
         <input on:input={(e) =>  changeState(e)} class="w-[90%] h-full pl-4 outline-none text-xl" placeholder="Search here.."/>
         <button on:click={searchDatabase} class="w-[10%] h-full flex items-center justify-center">

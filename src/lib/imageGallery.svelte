@@ -67,7 +67,7 @@
 
 <div class="flex flex-col space-y-4 w-full ">
     <div class="sticky top-20">
-    <div class="text-white grid grid-cols-2 md:auto-cols-max md:grid-flow-col md:space-x-8 items-center w-full justify-center ">
+    <div class="text-white md:justify-around md:flex grid grid-cols-2 md:space-x-8 items-center w-full justify-center ">
         {#if data}
             {#each data as gallery, index }
                 <button class={'transition-all duration-150 md:py-4 py-2 ' + (currentGallery?.title == gallery.title ? " scale-105 -translate-y-1" : "scale-100 -translate-y-0") + (data.length > 4 ? "text-xs md:text-base" : "text-sm md:text-xl")} on:click={() => { if (data) { currentGallery = data[index]; currentImageIndex = 0} }}>{getTitle(gallery.title)}</button>            

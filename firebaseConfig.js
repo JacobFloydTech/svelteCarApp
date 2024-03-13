@@ -9,13 +9,13 @@ import { doc, getDoc } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyAIxD9eFCb1rHYpq92hIs_HSmvwq8G1Nt4",
+export const firebaseConfig = {
+  apiKey: process.env.FIREBASE_APIKEY,
   authDomain: "hemmingsk-c41c7.firebaseapp.com",
   projectId: "hemmingsk-c41c7",
   storageBucket: "hemmingsk-c41c7.appspot.com",
   messagingSenderId: "635212315810",
-  appId: "1:635212315810:web:f472f06f2c76772abaebfb",
+  appId: process.env.FIREBASE_APPID,
   measurementId: "G-D75FFDJHC8"
 };
 

@@ -104,7 +104,7 @@
         <input on:input={(e) => handleNumberChange(e, "max_year")} class="border-2 rounded-t-md p-1 px-2" type="number" placeholder="Max Year" />
         <input on:input={(e) => handleNumberChange(e, "min_price")} class="border-2 rounded-t-md p-1 px-2" type="number" placeholder="Min Price" />
         <input on:input={(e) => handleNumberChange(e, "max_price")} class="border-2 rounded-t-md p-1 px-2" type="number" placeholder="Max Price" />
-        <div class="relative z-50 w-full  h-full col-span-2 md:hidden block">
+        <div class="relative  w-full  h-full col-span-2 md:hidden block">
             <input on:input={handleChange} class="rounded-t-md h-full p-1 px-2 w-full" placeholder="Company name here"/>
                 <dialog class="w-full" open>
                     <div class="max-h-96 overflow-y-scroll">

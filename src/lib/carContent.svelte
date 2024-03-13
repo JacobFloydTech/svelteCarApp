@@ -18,7 +18,7 @@
         console.log(data);
         description = data;
     }
-    onMount(() => {console.log(data); getDescription(data.url, data.id)})
+    onMount(() => {getDescription(data.url, data.id)})
 </script>
 
 <div class="flex flex-col text-white text-xl space-y-2">

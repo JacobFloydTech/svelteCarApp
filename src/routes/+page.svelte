@@ -2,8 +2,7 @@
     import SearchButton from "$lib/SearchButton.svelte";
     import Header from "$lib/header.svelte";
 	import Results from "$lib/results.svelte";
-   
-
+    
 </script>
 
 <div class="flex flex-col">

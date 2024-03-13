@@ -6,6 +6,7 @@
     let loaded: boolean = false;
     let imageElement: HTMLImageElement;
     let element: HTMLElement;
+    let carImage: string = Object.values(car.thumbnail.xs)[0];
     function generateLink(id: number, link: string) { 
         let arr = link.split('/').pop()!.split('-');
         arr.pop();
@@ -22,7 +23,8 @@
     onMount(() =>element?.classList.remove('carComponentBlur'))
 </script>
 
-<a  bind:this={element} href={generateLink(car.id, car.url)} on:mouseleave={() => {imageElement.classList.remove('hover')}}  on:mouseenter={() => {imageElement.classList.add('hover')} } class={'w-full h-full rounded-xl border-2 border-black overflow-hidden relative z-0 carComponentBlur carComponent'}>
+<a  style="background-image: url({carImage});" bind:this={element} href={generateLink(car.id, car.url)} on:mouseleave={() => {imageElement.classList.remove('hover')}}  on:mouseenter={() => {imageElement.classList.add('hover')} } class={`bg-cover  w-full min-h-48 min-w-48 xl:min-h-96 xl:min-w-96 h-full rounded-xl border-2 border-black overflow-hidden relative z-0 carComponentBlur carComponent`}>
+    <div class="w-full h-full absolute backdrop-blur-xl -z-10"/>
     <img on:load={() => loaded = true} bind:this={imageElement} class="baseImage" alt="thumbnail" src={Object.values(car.thumbnail.xl)[0]}/>
     {#if loaded}    
         <div class="absolute 2xl:space-y-2 bg-gradient-to-b from-transparent to-black from-40% top-0 text-white left-0 w-full h-full flex flex-col justify-end p-2 md:p-4">

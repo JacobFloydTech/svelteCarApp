@@ -1,5 +1,5 @@
 
-const port = 3000
+const port = 3000;
 
 import express from 'express'
 import cors from 'cors'
@@ -18,10 +18,12 @@ app.post('/search', async(req, res) => {
     if (!cookie) return
     let {baseLink, ...body} = req.body;
     baseLink += Object.values(body).join('');
+
     const response = await fetch(baseLink, {headers: { 
-        "cookie": cookie
-    }})
-    const {results} = await response.json();
+       cookie: cookie
+    }
+    })
+    const { results } = await response.json();
     res.send(results)
 
 })
@@ -30,7 +32,7 @@ app.post('/', async(req, res) => {
     const {linkComponent} = req.body;
     const cookie = await getHemmingsCookie();
     const link = `https://www.hemmings.com/auctions/api/${linkComponent}/gallery-images`
-    const response = await fetch(link, { headers: { cookie: cookie}})
+    const response = await fetch(link, { headers: { cookie: cookie } })
     const data = await response.json();
 
     res.send(data)
@@ -50,7 +52,6 @@ app.post('/filterSearch', async(req, res) => {
     if ( make_ids.length != 0) { 
         link += make_ids.map((e) => `&make_id[]=${e}`).join('');
     }
-
     const response = await fetch(link, { headers: { "cookie": cookie}})
     const {results} = await response.json()
     res.send({ results })

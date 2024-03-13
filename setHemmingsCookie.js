@@ -6,14 +6,14 @@ const link = 'https://www.hemmings.com/classifieds/cars-for-sale/bmw';
 let cookie;
 const main = async () => {
   try {
-    const browser = await puppeteer.launch({ args: ['--disable-site-isolation-trials'], headless: 'new' })
+    const browser = await puppeteer.launch({ args: ['--disable-site-isolation-trials'], headless: false })
     const page = await browser.newPage();
     page.setRequestInterception(true);
     page.on('request', async (request) => {
       const headers = request.headers();
-      if (headers.referer == 'https://www.hemmings.com/classifieds/cars-for-sale/bmw' && request.url() == 'https://www.hemmings.com/stories-api/search/bmw/related-models') {
+      if (Object.keys(headers).includes('cookie')) { 
         cookie = headers.cookie;
-        await page.close()
+        await page.close();
       }
       request.continue()
     })
@@ -34,7 +34,7 @@ const main = async () => {
 const uploadToFirebase = async (cookie) => { 
   const docRef = doc(firestore, 'hemmings', 'cookie');
   await setDoc(docRef, { currentCookie: cookie });
-  console.log("completed upload!");
+  console.log("completed upload!", cookie);
   process.exit(1);
 }
 

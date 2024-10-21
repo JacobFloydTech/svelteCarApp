@@ -1,3 +1,5 @@
+## Warning: deprecated
+   The API I was using to get the data has changed, and the backend needs to be reconfigured (Still WIP)  
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
